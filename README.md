@@ -2,6 +2,12 @@
 
 LifeFund is a modern, AI-powered financial management application designed to help users track their spending, set savings goals, and gain deep insights into their financial health. By leveraging real-time banking data and advanced AI categorization, LifeFund transforms complex transactions into actionable financial wisdom.
 
+## 📱 Preview
+
+| Dashboard Overview | Transactions View |
+| :---: | :---: |
+| ![Dashboard](public/screenshots/dashboard_preview.png) | ![Transactions](public/screenshots/transactions_preview.png) |
+
 ## ✨ Key Features
 
 -   **📊 Comprehensive Dashboard**: A bird's-eye view of your finances, including real-time balances, expense charts, and upcoming budget alerts.
