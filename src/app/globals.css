@@ -1,4 +1,44 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Global Scrollbar System */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  border: 2px solid #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) #0a0a0a;
+}
+
+/* Ensure interactive elements always show pointer */
+button,
+a,
+input[type="submit"],
+select,
+label[for] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
 
 :root {
   --background: #ffffff;

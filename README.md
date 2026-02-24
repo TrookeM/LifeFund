@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LifeFund 🚀
 
-## Getting Started
+LifeFund is a modern, AI-powered financial management application designed to help users track their spending, set savings goals, and gain deep insights into their financial health. By leveraging real-time banking data and advanced AI categorization, LifeFund transforms complex transactions into actionable financial wisdom.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   **📊 Comprehensive Dashboard**: A bird's-eye view of your finances, including real-time balances, expense charts, and upcoming budget alerts.
+-   **🔌 Plaid Integration**: Seamlessly connect your bank accounts for automatic, secure transaction syncing.
+-   **🤖 AI-Powered Insights**: Uses Google Gemini API to automatically categorize transactions, identify spending patterns, and provide personalized financial advice.
+-   **💸 Smart Budgeting**: Set monthly limits for different categories and get notified before you overspend.
+-   **🎯 Savings Goals**: Define clear objectives (like a "Emergency Fund" or "Dream Vacation") and track your progress with automatic round-ups.
+-   **🎮 Gamification System**: Stay motivated with streaks and savings points as you hit your financial milestones.
+-   **📑 Subscription Monitoring**: Automatically detect and manage recurring subscriptions to eliminate "vampire" expenses.
+-   **🧾 Receipt Scanning**: (Coming Soon) Scan physical receipts to keep all your spending in one place.
+
+## 🛠️ Tech Stack
+
+-   **Frontend**: [Next.js](https://nextjs.org/) (App Router), [React](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/)
+-   **Backend**: [Prisma ORM](https://www.prisma.io/), [PostgreSQL](https://www.postgresql.org/)
+-   **Banking API**: [Plaid](https://plaid.com/)
+-   **AI Engine**: [Google Generative AI (Gemini)](https://ai.google.dev/)
+-   **Languages**: [TypeScript](https://www.typescriptlang.org/)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+-   Node.js 20+
+-   PostgreSQL database
+-   Plaid Developer Account
+-   Google Gemini API Key
+
+### Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/lifefund.git
+    cd lifefund
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Variables**:
+    Create a `.env` file in the root directory and add the following:
+    ```env
+    DATABASE_URL="postgresql://user:password@localhost:5432/lifefund"
+    PLAID_CLIENT_ID="your_plaid_client_id"
+    PLAID_SECRET="your_plaid_secret"
+    PLAID_ENV="sandbox" # or development/production
+    GOOGLE_GENAI_API_KEY="your_gemini_api_key"
+    ```
+
+4.  **Database Setup**:
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+5.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   `src/app`: Next.js App Router pages and layouts.
+-   `src/components`: Reusable UI components.
+-   `prisma/`: Database schema and migrations.
+-   `scripts/`: Utility scripts for database fixing and bank simulation.
 
-## Learn More
+## 📄 License
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

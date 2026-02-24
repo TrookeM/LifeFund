@@ -1,0 +1,162 @@
+// --- prisma/schema.prisma ---
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Account {
+  userId            String
+  type              String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime
+  access_token      String?
+  expires_at        Int?
+  id_token          String?
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  scope             String?
+  session_state     String?
+  token_type        String?
+  User              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  User                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model BankAccount {
+  id                String        @id
+  userId            String
+  name              String
+  type              String
+  balance           Float
+  currency          String        @default("EUR")
+  isManual          Boolean       @default(false)
+  institutionId     String?       
+  institutionName   String?       
+  mask              String?       
+  accessToken       String?
+  itemId            String?
+  lastCursor        String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime
+  providerAccountId String?       @unique
+  User              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Transaction       Transaction[]
+}
+
+model Budget {
+  id        String   @id @default(cuid()) // Le añado default cuid() para que Prisma asigne ID automático si no se pasa
+  userId    String
+  category  String
+  limit     Float
+  period    String   @default("MONTHLY")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id             String    @id @default(cuid())
+  userId         String
+  name           String
+  category       String
+  targetAmount   Float
+  currentAmount  Float     @default(0)
+  deadline       DateTime?
+  roundUpEnabled Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  User           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id             String          @id
+  accountId      String
+  userId         String
+  amount         Float
+  date           DateTime
+  description    String
+  category       String?
+  type           TransactionType @default(EXPENSE)
+  aiCategory     String?
+  aiTags         String[]
+  isSubscription Boolean         @default(false)
+  isRecurring    Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime
+  BankAccount    BankAccount     @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  User           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 🚀 ÍNDICES DE ALTO RENDIMIENTO
+  @@index([userId, date])
+  @@index([accountId])
+}
+
+model User {
+  id                   String          @id
+  email                String          @unique
+  name                 String?
+  image                String?
+  preferredCurrency    String          @default("EUR")
+  dateFormat           String          @default("DD/MM/YYYY")
+  notificationsEnabled Boolean         @default(true)
+  
+  // 🎮 NUEVO: Sistema de Gamificación
+  currentStreak        Int             @default(0) // Meses seguidos cumpliendo presupuesto
+  longestStreak        Int             @default(0) // Récord histórico
+  savingsPoints        Int             @default(0) // Puntos para desbloquear logros
+  
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  emailVerified        DateTime?
+  
+  Account              Account[]
+  Authenticator        Authenticator[]
+  BankAccount          BankAccount[]
+  Budget               Budget[]
+  Goal                 Goal[]
+  Session              Session[]
+  Transaction          Transaction[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
